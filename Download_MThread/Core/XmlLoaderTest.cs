@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml;
+using Download_MThread.Core.Download;
 
 namespace Download_MThread.Core
 {
@@ -28,16 +25,16 @@ namespace Download_MThread.Core
         }
         private static ImageFile MakeFile(XmlNode xmlNode)
         {
-            var File = new ImageFile();
+            var file = new ImageFile();
             if (xmlNode["image"] != null)
             {
-                File.Url = xmlNode["image"].InnerText;
+                file.Url = xmlNode["image"].InnerText;
             }
             if (xmlNode["name"] != null)
             {
-                File.Name = xmlNode["name"].InnerText;
+                file.Name = xmlNode["name"].InnerText;
             }
-            return File;
+            return file;
         }
     }
 }

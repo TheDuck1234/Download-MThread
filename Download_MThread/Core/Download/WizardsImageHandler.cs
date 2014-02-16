@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Windows;
 
-namespace Download_MThread.Core
+namespace Download_MThread.Core.Download
 {
    public class WizardsImageHandler
     {

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Download_MThread.Core
+namespace Download_MThread.Core.Download
 {
     public static class DownloadLoader
     {
@@ -72,15 +69,7 @@ namespace Download_MThread.Core
                 WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
                 OnProgressed();
 
-                if (DownloadLoader.IsCache(fileName, file.Name + ".jpg"))
-                {
-                    errorList.Add(true);
-                }
-                else
-                {
-                    errorList.Add(false);
-                }
-
+                errorList.Add(DownloadLoader.IsCache(fileName, file.Name + ".jpg"));
             }
 
             return errorList;

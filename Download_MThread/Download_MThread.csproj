@@ -100,7 +100,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TestXml\HS Cardlist.xml">
+    <Resource Include="Core\TestXml\HS Cardlist.xml">
       <SubType>Designer</SubType>
     </Resource>
   </ItemGroup>

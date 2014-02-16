@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace ExcelNumberCleanser.Core.Log
+namespace Download_MThread.Core.Log
 {
 	public static class LogMaker
 	{

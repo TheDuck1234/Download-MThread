@@ -2,28 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using Download_MThread.Core.Download;
 
 namespace Download_MThread
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private int _count = 0;
+        private int _count;
         private DateTime _starttime;
 
 
@@ -40,8 +32,8 @@ namespace Download_MThread
             _starttime = DateTime.Now;
             var tasks = lists.Select(list => Task.Factory.StartNew(() =>
             {
-                var _worker = new DownloadWorker();
-                _worker.Progressed += (o, args) =>
+                var worker = new DownloadWorker();
+                worker.Progressed += (o, args) =>
                 {
                     lock (this)
                     {
@@ -61,7 +53,7 @@ namespace Download_MThread
                     });
                 };
 
-                var result = _worker.DownloadeImage(list.ToList(),@"C:\HS Card Cache");
+                var result = worker.DownloadeImage(list.ToList(),@"C:\HS Card Cache");
                 return result;
 
 

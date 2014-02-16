@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ExcelNumberCleanser.Core.Log
+namespace Download_MThread.Core.Log
 {
 	public class Log
 	{
@@ -29,8 +29,9 @@ namespace ExcelNumberCleanser.Core.Log
 
 		public void FinishLog()
 		{
-			var path = AppSettings.GetLogPath()+DateTime.Now.ToShortDateString() +".txt";
+		    var path = "2.txt"; //AppSettings.GetLogPath()+DateTime.Now.ToShortDateString() +".txt";
 			LogMaker.MakeListLog(LogList,path);
+            LogList.Clear();
 		}
 	}
 }
