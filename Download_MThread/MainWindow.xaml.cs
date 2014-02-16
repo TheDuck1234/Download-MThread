@@ -1,4 +1,6 @@
-﻿using Download_MThread.Core;
+﻿using System.IO;
+using System.Windows.Documents;
+using Download_MThread.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,7 @@ namespace Download_MThread
             var lists = DownloadLoader.Partition(testlist, 5);
             // Create and collect tasks in list
             _starttime = DateTime.Now;
+            ToggleButton(false);
             var tasks = lists.Select(list => Task.Factory.StartNew(() =>
             {
                 var worker = new DownloadWorker();
@@ -44,16 +47,20 @@ namespace Download_MThread
                         // ReSharper disable once RedundantCast
                         var procent = ((100 * _count) / testlist.Count);
                         ProgressBar.Value = procent;
-                        ProgressLabel.Content = "Progress: " + procent + "%";
+                        ProgressLabel.Content = procent + "%";
                         //CountLabel.Content = "Total items cleanse: " + _count;
                         if (_count > 0)
                         {
-                            EstimateTimeLabel.Content = "Estimate Time: " + EstimateTime(testlist.Count).ToString();
+                            EstimateTimeLabel.Content = "Time: " + EstimateTime(testlist.Count).ToString();
                         }
                     });
                 };
-
-                var result = worker.DownloadeImage(list.ToList(),@"C:\HS Card Cache");
+                const string path = @"C:\HS Card Cache";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                var result = worker.DownloadeImage(list.ToList(),path);
                 return result;
 
 
@@ -68,8 +75,9 @@ namespace Download_MThread
                 {
                     results.AddRange(result.ToList());
                 }
-
+                //ToggleButton(true);
             });
+            ToggleButton(true);
         }
         private TimeSpan EstimateTime(int max)
         {
@@ -77,6 +85,12 @@ namespace Download_MThread
             var secondsremaining = (int)(timespent.TotalSeconds / _count * (max - _count));
             var timespan = TimeSpan.FromSeconds(secondsremaining);
             return timespan;
+        }
+
+        private void ToggleButton(bool status)
+        {
+            TestButton.IsEnabled = status;
+            DcButton.IsEnabled = status;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
