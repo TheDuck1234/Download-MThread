@@ -10,7 +10,6 @@ namespace Download_MThread.Core
         public static void DownloadRemoteImageFile(string uri, string fileName)
         {
             try
-
             {
                 var request = (HttpWebRequest)WebRequest.Create(uri);
                 var response = (HttpWebResponse)request.GetResponse();
