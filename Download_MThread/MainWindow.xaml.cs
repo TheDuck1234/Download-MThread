@@ -86,5 +86,11 @@ namespace Download_MThread
             var timespan = TimeSpan.FromSeconds(secondsremaining);
             return timespan;
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DownloadLoader.DeleteAllCache(@"C:\HS Card Cache");
+            MessageBox.Show("Caches Deleted");
+        }
     }
 }

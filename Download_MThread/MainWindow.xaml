@@ -6,6 +6,7 @@
         <ProgressBar Name="ProgressBar" HorizontalAlignment="Left" IsIndeterminate="false"  Height="42" Margin="10,10,0,0" VerticalAlignment="Top" Width="413"/>
         <Label Name="EstimateTimeLabel" Content="Loeading"  HorizontalAlignment="Left" Margin="169,19,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" FontSize="14"/>
         <Label Name="ProgressLabel" Content="%0" HorizontalAlignment="Left" Margin="443,19,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" FontSize="14"/>
-        <Button Content="Testing" HorizontalAlignment="Left" Margin="316,72,0,0" VerticalAlignment="Top" Width="107" Height="33" FontWeight="Bold" FontSize="14" Click="Button_Click"/>
+        <Button Content="Testing" HorizontalAlignment="Left" Margin="147,72,0,0" VerticalAlignment="Top" Width="107" Height="33" FontWeight="Bold" FontSize="14" Click="Button_Click"/>
+        <Button Content="Delete Caches" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="113"  Height="33" FontWeight="Bold" FontSize="14" Click="Button_Click_1"/>
     </Grid>
 </Window>

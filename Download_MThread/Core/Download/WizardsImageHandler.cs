@@ -31,7 +31,7 @@ namespace Download_MThread.Core
             }
             catch (Exception)
             {
-                MessageBox.Show("No Internetconnection");
+                
             }
         }
     }

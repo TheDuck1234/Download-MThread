@@ -9,7 +9,6 @@ namespace Download_MThread.Core
 {
     public static class DownloadLoader
     {
-
         public static List<T>[] Partition<T>(List<T> list, int totalPartitions)
         {
             if (list == null)
