@@ -61,9 +61,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\ImageFile.cs" />
-    <Compile Include="Core\WizardsImageHandler.cs" />
-    <Compile Include="Core\DownloadLoader.cs" />
+    <Compile Include="Core\Download\ImageFile.cs" />
+    <Compile Include="Core\Log\LogMaker.cs" />
+    <Compile Include="Core\Log\LogManager.cs" />
+    <Compile Include="Core\Download\WizardsImageHandler.cs" />
+    <Compile Include="Core\Download\DownloadLoader.cs" />
     <Compile Include="Core\XmlLoaderTest.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
