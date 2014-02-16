@@ -26,6 +26,7 @@ namespace Download_MThread
         private int _count = 0;
         private DateTime _starttime;
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace Download_MThread
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var testlist = new List<string>();
+            var testlist = XmlLoaderTest.GetUrl();
             var lists = DownloadLoader.Partition(testlist, 5);
             // Create and collect tasks in list
             _starttime = DateTime.Now;
@@ -60,7 +61,7 @@ namespace Download_MThread
                     });
                 };
 
-                var result = _worker.DownloadeImage(list.ToList(),"");
+                var result = _worker.DownloadeImage(list.ToList(),@"C:\HS Card Cache");
                 return result;
 
 

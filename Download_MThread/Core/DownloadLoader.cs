@@ -63,17 +63,17 @@ namespace Download_MThread.Core
                 handler(this, EventArgs.Empty);
         }
 
-        public List<bool> DownloadeImage(List<string> urlList, string path)
+        public List<bool> DownloadeImage(List<ImageFile> fileList, string path)
         {
             var errorList = new List<bool>();
 
-            foreach (var url in urlList)
+            foreach (var file in fileList)
             {
-                var fileName = path + "/"+ url +".jpg";
-                WizardsImageHandler.DownloadRemoteImageFile(url, fileName);
+                var fileName = path + @"\"+ file.Name +".jpg";
+                WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
                 OnProgressed();
 
-                if (DownloadLoader.IsCache(fileName, url + ".jpg"))
+                if (DownloadLoader.IsCache(fileName, file.Name + ".jpg"))
                 {
                     errorList.Add(true);
                 }
