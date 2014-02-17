@@ -6,8 +6,12 @@ namespace Download_MThread.Core.Log
 {
 	public static class LogMaker
 	{
-		public static void MakeListLog(List<Log> linesList, string path )
+		public static void MakeListLog(List<Download.Log> linesList, string path )
 		{
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
 			var text = linesList.Select(log => log.GiveLog()).ToList();
 			File.WriteAllLines(path, text);
 		}

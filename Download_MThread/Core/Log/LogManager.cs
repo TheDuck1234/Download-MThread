@@ -1,37 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Download_MThread.Core.Log
 {
-	public class Log
+    public class LogManager
 	{
-		public string Data { get; set; }
-		public string Time = DateTime.Now.ToLongTimeString();
-
-		public string GiveLog()
-		{
-			return Time + " | " + Data;
-		}
-	}
-	public class LogManager
-	{
-		public List<Log> LogList { get; private set; }
+		public List<Download.Log> LogList { get; private set; }
 
 		public LogManager()
 		{
-			LogList = new List<Log>();
+			LogList = new List<Download.Log>();
 		}
 
 		public void Log(string text)
 		{
-			LogList.Add(new Log{Data = text});
+			LogList.Add(new Download.Log{Data = text});
 		}
 
 		public void FinishLog()
 		{
-		    var path = "2.txt"; //AppSettings.GetLogPath()+DateTime.Now.ToShortDateString() +".txt";
-			LogMaker.MakeListLog(LogList,path);
-            LogList.Clear();
 		}
 	}
 }

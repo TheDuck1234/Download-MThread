@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Download_MThread.Core.Download;
+using Download_MThread.Core.Log;
 
 namespace Download_MThread
 {
@@ -70,13 +71,16 @@ namespace Download_MThread
             // ReSharper disable once ImplicitlyCapturedClosure
             Task.Factory.StartNew(() =>
             {
-                var results = new List<string>();
+                var results = new List<Log>();
                 // Wait till all tasks completed
 
                 foreach (var result in tasks.Select(task => task.Result))
                 {
                     results.AddRange(result.ToList());
                 }
+                var path = new FileInfo("HS Cardlist.xml");
+                LogMaker.MakeListLog(results, path.Directory + @"\Logs");
+
                 //ToggleButton(true);
             });
             ToggleButton(true);
