@@ -55,12 +55,14 @@ namespace Download_MThread
                         }
                     });
                 };
-                const string path = @"C:\HS Card Cache";
-                if (!Directory.Exists(path))
+
+                var path = new FileInfo("HS Cardlist.xml");
+
+                if (!Directory.Exists(path.Directory + @"\HS Card Cache"))
                 {
-                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(path.Directory + @"\HS Card Cache");
                 }
-                var result = worker.DownloadeImage(list.ToList(),path);
+                var result = worker.DownloadeImage(list.ToList(), path.Directory + @"\HS Card Cache");
                 return result;
 
 
@@ -68,7 +70,7 @@ namespace Download_MThread
             // ReSharper disable once ImplicitlyCapturedClosure
             Task.Factory.StartNew(() =>
             {
-                var results = new List<bool>();
+                var results = new List<string>();
                 // Wait till all tasks completed
 
                 foreach (var result in tasks.Select(task => task.Result))
@@ -95,7 +97,8 @@ namespace Download_MThread
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            DownloadLoader.DeleteAllCache(@"C:\HS Card Cache");
+            var path = new FileInfo("HS Cardlist.xml");
+            DownloadLoader.DeleteAllCache(path.Directory+ @"\HS Card Cache");
             MessageBox.Show("Caches Deleted");
         }
     }

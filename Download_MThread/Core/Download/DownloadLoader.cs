@@ -33,9 +33,9 @@ namespace Download_MThread.Core.Download
 
             return partitions;
         }
-        public static bool IsCache(string path, string cardName)
+        public static bool IsCache(string fileName)
         {
-            return File.Exists(path + cardName.ToLower() + ".jpg");
+            return File.Exists(fileName);
         }
 
         public static void DeleteAllCache(string path)
@@ -59,17 +59,22 @@ namespace Download_MThread.Core.Download
                 handler(this, EventArgs.Empty);
         }
 
-        public List<bool> DownloadeImage(List<ImageFile> fileList, string path)
+        public List<string> DownloadeImage(List<ImageFile> fileList, string path)
         {
-            var errorList = new List<bool>();
+            var errorList = new List<string>();
 
             foreach (var file in fileList)
             {
                 var fileName = path + @"\"+ file.Name +".jpg";
-                WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
+                if (!DownloadLoader.IsCache(fileName))
+                {
+                    WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
+                    if (!DownloadLoader.IsCache(fileName))
+                    {
+                        errorList.Add(file.Name+ " didn't download fully !Error!");
+                    }
+                }
                 OnProgressed();
-
-                errorList.Add(DownloadLoader.IsCache(fileName, file.Name + ".jpg"));
             }
 
             return errorList;
