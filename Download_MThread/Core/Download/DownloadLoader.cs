@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Download_MThread.Core
+namespace Download_MThread.Core.Download
 {
     public static class DownloadLoader
     {
@@ -36,9 +33,9 @@ namespace Download_MThread.Core
 
             return partitions;
         }
-        public static bool IsCache(string path, string cardName)
+        public static bool IsCache(string fileName)
         {
-            return File.Exists(path + cardName.ToLower() + ".jpg");
+            return File.Exists(fileName);
         }
 
         public static void DeleteAllCache(string path)
@@ -62,25 +59,22 @@ namespace Download_MThread.Core
                 handler(this, EventArgs.Empty);
         }
 
-        public List<bool> DownloadeImage(List<ImageFile> fileList, string path)
+        public List<Log.Log> DownloadeImage(List<ImageFile> fileList, string path)
         {
-            var errorList = new List<bool>();
+            var errorList = new List<Log.Log>();
 
             foreach (var file in fileList)
             {
                 var fileName = path + @"\"+ file.Name +".jpg";
-                WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
+                if (!DownloadLoader.IsCache(fileName))
+                {
+                    WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
+                    if (!DownloadLoader.IsCache(fileName))
+                    {
+                        errorList.Add(new Log.Log{Data = file.Name+ " didn't download fully !Error!"});
+                    }
+                }
                 OnProgressed();
-
-                if (DownloadLoader.IsCache(fileName, file.Name + ".jpg"))
-                {
-                    errorList.Add(true);
-                }
-                else
-                {
-                    errorList.Add(false);
-                }
-
             }
 
             return errorList;

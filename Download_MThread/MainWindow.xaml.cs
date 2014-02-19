@@ -1,30 +1,25 @@
-﻿using Download_MThread.Core;
+﻿using System.IO;
+using Download_MThread.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using Download_MThread.Core.Download;
+using Download_MThread.Core.Log;
 
 namespace Download_MThread
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private int _count = 0;
+        private int _count;
         private DateTime _starttime;
+        private readonly string _xmlFileName = AppSetting.GetXmlFileName();
 
 
         public MainWindow()
@@ -34,14 +29,15 @@ namespace Download_MThread
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var testlist = XmlLoaderTest.GetUrl();
+            var testlist = XmlReader.GetXmlFiles(_xmlFileName);
             var lists = DownloadLoader.Partition(testlist, 5);
             // Create and collect tasks in list
             _starttime = DateTime.Now;
+            ToggleButton(false);
             var tasks = lists.Select(list => Task.Factory.StartNew(() =>
             {
-                var _worker = new DownloadWorker();
-                _worker.Progressed += (o, args) =>
+                var worker = new DownloadWorker();
+                worker.Progressed += (o, args) =>
                 {
                     lock (this)
                     {
@@ -52,16 +48,22 @@ namespace Download_MThread
                         // ReSharper disable once RedundantCast
                         var procent = ((100 * _count) / testlist.Count);
                         ProgressBar.Value = procent;
-                        ProgressLabel.Content = "Progress: " + procent + "%";
+                        ProgressLabel.Content = procent + "%";
                         //CountLabel.Content = "Total items cleanse: " + _count;
                         if (_count > 0)
                         {
-                            EstimateTimeLabel.Content = "Estimate Time: " + EstimateTime(testlist.Count).ToString();
+                            EstimateTimeLabel.Content = "Time: " + EstimateTime(testlist.Count).ToString();
                         }
                     });
                 };
 
-                var result = _worker.DownloadeImage(list.ToList(),@"C:\HS Card Cache");
+                var path = Directory.GetCurrentDirectory() + @"\Card Data";
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                var result = worker.DownloadeImage(list.ToList(), path);
                 return result;
 
 
@@ -69,15 +71,20 @@ namespace Download_MThread
             // ReSharper disable once ImplicitlyCapturedClosure
             Task.Factory.StartNew(() =>
             {
-                var results = new List<bool>();
+                var results = new List<Log>();
                 // Wait till all tasks completed
 
                 foreach (var result in tasks.Select(task => task.Result))
                 {
                     results.AddRange(result.ToList());
                 }
+                var path = Directory.GetCurrentDirectory() + @"\Logs";
 
+                LogMaker.MakeListLog(results, path);
+
+                //ToggleButton(true);
             });
+            ToggleButton(true);
         }
         private TimeSpan EstimateTime(int max)
         {
@@ -87,9 +94,17 @@ namespace Download_MThread
             return timespan;
         }
 
+        private void ToggleButton(bool status)
+        {
+            TestButton.IsEnabled = status;
+            DcButton.IsEnabled = status;
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            DownloadLoader.DeleteAllCache(@"C:\HS Card Cache");
+            var path = Directory.GetCurrentDirectory() + @"\Card Data";
+
+            DownloadLoader.DeleteAllCache(path);
             MessageBox.Show("Caches Deleted");
         }
     }

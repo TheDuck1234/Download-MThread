@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,12 +62,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\AppSetting.cs" />
     <Compile Include="Core\Download\ImageFile.cs" />
-    <Compile Include="Core\Log\LogMaker.cs" />
     <Compile Include="Core\Log\LogManager.cs" />
     <Compile Include="Core\Download\WizardsImageHandler.cs" />
     <Compile Include="Core\Download\DownloadLoader.cs" />
-    <Compile Include="Core\XmlLoaderTest.cs" />
+    <Compile Include="Core\Download\XmlReader.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -100,8 +101,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TestXml\HS Cardlist.xml">
+    <Resource Include="Core\XmlFile\HS Cardlist.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
