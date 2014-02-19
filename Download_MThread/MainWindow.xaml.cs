@@ -19,6 +19,7 @@ namespace Download_MThread
     {
         private int _count;
         private DateTime _starttime;
+        private readonly string _xmlFileName = AppSetting.GetXmlFileName();
 
 
         public MainWindow()
@@ -28,7 +29,7 @@ namespace Download_MThread
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var testlist = XmlLoaderTest.GetUrl();
+            var testlist = XmlReader.GetXmlFiles(_xmlFileName);
             var lists = DownloadLoader.Partition(testlist, 5);
             // Create and collect tasks in list
             _starttime = DateTime.Now;
@@ -56,13 +57,13 @@ namespace Download_MThread
                     });
                 };
 
-                var path = new FileInfo("HS Cardlist.xml");
+                var path = Directory.GetCurrentDirectory() + @"\Card Data";
 
-                if (!Directory.Exists(path.Directory + @"\HS Card Cache"))
+                if (!Directory.Exists(path))
                 {
-                    Directory.CreateDirectory(path.Directory + @"\HS Card Cache");
+                    Directory.CreateDirectory(path);
                 }
-                var result = worker.DownloadeImage(list.ToList(), path.Directory + @"\HS Card Cache");
+                var result = worker.DownloadeImage(list.ToList(), path);
                 return result;
 
 
@@ -77,9 +78,9 @@ namespace Download_MThread
                 {
                     results.AddRange(result.ToList());
                 }
-                var path = new FileInfo("HS Cardlist.xml");
+                var path = Directory.GetCurrentDirectory() + @"\Logs";
 
-                LogMaker.MakeListLog(results, path.Directory + @"\Logs");
+                LogMaker.MakeListLog(results, path);
 
                 //ToggleButton(true);
             });
@@ -101,8 +102,9 @@ namespace Download_MThread
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var path = new FileInfo("HS Cardlist.xml");
-            DownloadLoader.DeleteAllCache(path.Directory+ @"\HS Card Cache");
+            var path = Directory.GetCurrentDirectory() + @"\Card Data";
+
+            DownloadLoader.DeleteAllCache(path);
             MessageBox.Show("Caches Deleted");
         }
     }

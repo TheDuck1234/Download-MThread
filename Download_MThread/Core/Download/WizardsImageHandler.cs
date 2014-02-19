@@ -9,7 +9,6 @@ namespace Download_MThread.Core.Download
         public static void DownloadRemoteImageFile(string uri, string fileName)
         {
             try
-
             {
                 var request = (HttpWebRequest)WebRequest.Create(uri);
                 var response = (HttpWebResponse)request.GetResponse();
@@ -30,7 +29,7 @@ namespace Download_MThread.Core.Download
             }
             catch (Exception)
             {
-                
+                //throw new Exception("connection error :" + fileName );
             }
         }
     }

@@ -1,29 +1,30 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml;
-using Download_MThread.Core.Download;
 
-namespace Download_MThread.Core
+namespace Download_MThread.Core.Download
 {
-    public static class XmlLoaderTest
+    public static class XmlReader
     {
-        public static List<ImageFile> GetUrl()
+        public static List<ImageFile> GetXmlFiles(string fileName)
         {
             var cardsList = new List<ImageFile>();
+
             var xDoc = new XmlDocument();
-            xDoc.Load("HS cardlist.xml");
+            xDoc.Load(fileName);
 
             var cards = xDoc.GetElementsByTagName("Card");
-            for (int i = 0; i < cards.Count; i++)
+            for (var i = 0; i < cards.Count; i++)
             {
                 var xmlElement = cards[i]["image"];
                 if (xmlElement != null)
                 {
-                    cardsList.Add(MakeFile(cards[i]));
+                    cardsList.Add(MakeImageFileFile(cards[i]));
                 }
             }
             return cardsList; 
         }
-        private static ImageFile MakeFile(XmlNode xmlNode)
+        private static ImageFile MakeImageFileFile(XmlNode xmlNode)
         {
             var file = new ImageFile();
             if (xmlNode["image"] != null)

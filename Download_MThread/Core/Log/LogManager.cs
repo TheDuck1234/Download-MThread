@@ -44,7 +44,7 @@ namespace Download_MThread.Core.Log
                 Directory.CreateDirectory(path);
             }
             var text = linesList.Select(log => log.GiveLog()).ToList();
-            File.WriteAllLines(path + @"\logtest.txt", text);
+            File.WriteAllLines(path + @"\logs.txt", text);
         }
 
         public static string[] ReadLogs(string folderPath)
