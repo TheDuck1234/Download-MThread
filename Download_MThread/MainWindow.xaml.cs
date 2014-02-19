@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Windows.Documents;
 using Download_MThread.Core;
 using System;
 using System.Collections.Generic;
@@ -79,6 +78,7 @@ namespace Download_MThread
                     results.AddRange(result.ToList());
                 }
                 var path = new FileInfo("HS Cardlist.xml");
+
                 LogMaker.MakeListLog(results, path.Directory + @"\Logs");
 
                 //ToggleButton(true);

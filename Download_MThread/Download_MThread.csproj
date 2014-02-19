@@ -62,8 +62,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Download\ImageFile.cs" />
-    <Compile Include="Core\Download\Log.cs" />
-    <Compile Include="Core\Log\LogMaker.cs" />
     <Compile Include="Core\Log\LogManager.cs" />
     <Compile Include="Core\Download\WizardsImageHandler.cs" />
     <Compile Include="Core\Download\DownloadLoader.cs" />

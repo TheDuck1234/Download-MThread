@@ -59,9 +59,9 @@ namespace Download_MThread.Core.Download
                 handler(this, EventArgs.Empty);
         }
 
-        public List<Log> DownloadeImage(List<ImageFile> fileList, string path)
+        public List<Log.Log> DownloadeImage(List<ImageFile> fileList, string path)
         {
-            var errorList = new List<Log>();
+            var errorList = new List<Log.Log>();
 
             foreach (var file in fileList)
             {
@@ -71,7 +71,7 @@ namespace Download_MThread.Core.Download
                     WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
                     if (!DownloadLoader.IsCache(fileName))
                     {
-                        errorList.Add(new Log{Data = file.Name+ " didn't download fully !Error!"});
+                        errorList.Add(new Log.Log{Data = file.Name+ " didn't download fully !Error!"});
                     }
                 }
                 OnProgressed();
