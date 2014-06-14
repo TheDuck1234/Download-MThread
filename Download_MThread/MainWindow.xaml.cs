@@ -19,7 +19,7 @@ namespace Download_MThread
     {
         private int _count;
         private DateTime _starttime;
-        private readonly string _xmlFileName = AppSetting.GetXmlFileName();
+        private readonly string _xmlFileName = AppSettings.GetXmlFileName();
 
 
         public MainWindow()
