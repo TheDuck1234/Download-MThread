@@ -38,14 +38,27 @@ namespace Download_MThread.Core.Download
             return File.Exists(fileName);
         }
 
-        public static void DeleteAllCache(string path)
+        public static bool DeleteAllCache(string path)
         {
-            var files = Directory.GetFiles(path);
-
-            foreach (var filename in files)
+            try
             {
-                File.Delete(filename);
+                if (string.IsNullOrEmpty(path))
+                {
+                    return false;
+                }
+                var files = Directory.GetFiles(path);
+                foreach (var filename in files)
+                {
+                    File.Delete(filename);
+                    return true;
+                }
             }
+            catch (DirectoryNotFoundException)
+            {
+
+                //throw new Exception("connection error :" + path);
+            }
+            return false;
         }
     }
     public class DownloadWorker

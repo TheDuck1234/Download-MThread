@@ -82,9 +82,9 @@ namespace Download_MThread
 
                 LogMaker.MakeListLog(results, path);
 
-                //ToggleButton(true);
+                ToggleButton(true);
             });
-            ToggleButton(true);
+            //ToggleButton(true);
         }
         private TimeSpan EstimateTime(int max)
         {
@@ -104,8 +104,13 @@ namespace Download_MThread
         {
             var path = Directory.GetCurrentDirectory() + @"\Card Data";
 
-            DownloadLoader.DeleteAllCache(path);
-            MessageBox.Show("Caches Deleted");
+            var delete = DownloadLoader.DeleteAllCache(path);
+            if(delete)
+                MessageBox.Show("Caches deleted");
+            else
+            {
+                MessageBox.Show("No caches to deleted");
+            }
         }
     }
 }
