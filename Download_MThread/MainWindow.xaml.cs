@@ -12,9 +12,6 @@ using Download_MThread.Core.Log;
 
 namespace Download_MThread
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow
     {
         private int _count;
@@ -31,9 +28,12 @@ namespace Download_MThread
         {
             var testlist = XmlReader.GetXmlFiles(_xmlFileName);
             var lists = DownloadLoader.Partition(testlist, 5);
+
             // Create and collect tasks in list
+
             _starttime = DateTime.Now;
             ToggleButton(false);
+
             var tasks = lists.Select(list => Task.Factory.StartNew(() =>
             {
                 var worker = new DownloadWorker();
@@ -44,12 +44,14 @@ namespace Download_MThread
                         _count++;
                     }
                     Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
-                    {
-                        // ReSharper disable once RedundantCast
+                    {    
+
                         var procent = ((100 * _count) / testlist.Count);
                         ProgressBar.Value = procent;
                         ProgressLabel.Content = procent + "%";
+
                         //CountLabel.Content = "Total items cleanse: " + _count;
+
                         if (_count > 0)
                         {
                             EstimateTimeLabel.Content = "Time: " + EstimateTime(testlist.Count).ToString();
@@ -68,10 +70,11 @@ namespace Download_MThread
 
 
             })).ToList();
-            // ReSharper disable once ImplicitlyCapturedClosure
+            
             Task.Factory.StartNew(() =>
             {
                 var results = new List<Log>();
+
                 // Wait till all tasks completed
 
                 foreach (var result in tasks.Select(task => task.Result))
@@ -105,12 +108,8 @@ namespace Download_MThread
             var path = Directory.GetCurrentDirectory() + @"\Card Data";
 
             var delete = DownloadLoader.DeleteAllCache(path);
-            if(delete)
-                MessageBox.Show("Caches deleted");
-            else
-            {
-                MessageBox.Show("No caches to deleted");
-            }
+
+            MessageBox.Show(delete ? "Caches deleted" : "No caches to deleted");
         }
     }
 }
