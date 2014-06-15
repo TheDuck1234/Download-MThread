@@ -46,16 +46,13 @@ namespace Download_MThread.Core.Download
                 {
                     return false;
                 }
-                var files = Directory.GetFiles(path);
-                foreach (var filename in files)
-                {
-                    File.Delete(filename);
-                    return true;
-                }
+
+                Directory.Delete(path, true);
+                
+                return true;
             }
             catch (DirectoryNotFoundException)
             {
-
                 //throw new Exception("connection error :" + path);
             }
             return false;

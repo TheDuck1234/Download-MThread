@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Download_MThread.Core.Download;
 using Download_MThread.Core.Log;
+using Download_MThread.Frames;
 
 namespace Download_MThread
 {
@@ -16,7 +17,6 @@ namespace Download_MThread
     {
         private int _count;
         private DateTime _starttime;
-        private readonly string _xmlFileName = AppSettings.GetXmlFileName();
 
 
         public MainWindow()
@@ -26,7 +26,7 @@ namespace Download_MThread
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var testlist = XmlReader.GetXmlFiles(_xmlFileName);
+            var testlist = XmlReader.GetXmlFiles(AppSettings.GetXmlFileName());
             var lists = DownloadLoader.Partition(testlist, 5);
 
             // Create and collect tasks in list
@@ -59,7 +59,7 @@ namespace Download_MThread
                     });
                 };
 
-                var path = Directory.GetCurrentDirectory() + @"\Card Data";
+                var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
 
                 if (!Directory.Exists(path))
                 {
@@ -81,13 +81,13 @@ namespace Download_MThread
                 {
                     results.AddRange(result.ToList());
                 }
-                var path = Directory.GetCurrentDirectory() + @"\Logs";
+                var path = Directory.GetCurrentDirectory() + AppSettings.GetLogPath();
 
                 LogMaker.MakeListLog(results, path);
 
-                ToggleButton(true);
+                //ToggleButton(true);
             });
-            //ToggleButton(true);
+            ToggleButton(true);
         }
         private TimeSpan EstimateTime(int max)
         {
@@ -105,11 +105,18 @@ namespace Download_MThread
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var path = Directory.GetCurrentDirectory() + @"\Card Data";
+            var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
 
             var delete = DownloadLoader.DeleteAllCache(path);
 
             MessageBox.Show(delete ? "Caches deleted" : "No caches to deleted");
+        }
+
+        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var imageWindow = new CardImageWindow();
+
+            imageWindow.Show();
         }
     }
 }

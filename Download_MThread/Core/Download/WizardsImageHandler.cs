@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Download_MThread.Core.Download
@@ -32,5 +34,12 @@ namespace Download_MThread.Core.Download
                 //throw new Exception("connection error :" + fileName );
             }
         }
+
+       public static List<ImageFile> LoadImageFiles(string path)
+       {
+           var fileArray = Directory.GetFiles(path, "*.jpg", SearchOption.AllDirectories);
+
+           return fileArray.Select(filePath => new ImageFile {Name = filePath}).ToList();
+       } 
     }
 }

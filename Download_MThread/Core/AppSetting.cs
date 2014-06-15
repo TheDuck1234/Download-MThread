@@ -7,8 +7,17 @@ namespace Download_MThread.Core
         public static string GetXmlFileName()
         {
             
-            // ReSharper disable once CSharpWarnings::CS0618
             return ConfigurationSettings.AppSettings["XmlFileName"];
+        }
+        public static string GetImagePath()
+        {
+
+            return ConfigurationSettings.AppSettings["ImagePath"];
+        }
+        public static string GetLogPath()
+        {
+
+            return ConfigurationSettings.AppSettings["LogPath"];
         }
     }
 }
