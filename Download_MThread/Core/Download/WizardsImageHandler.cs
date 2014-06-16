@@ -37,9 +37,30 @@ namespace Download_MThread.Core.Download
 
        public static List<ImageFile> LoadImageFiles(string path)
        {
-           var fileArray = Directory.GetFiles(path, "*.jpg", SearchOption.AllDirectories);
+           try
+           {
+               var fileArray = Directory.GetFiles(path, "*.jpg", SearchOption.AllDirectories);
+               var imageFiles = new List<ImageFile>();
 
-           return fileArray.Select(filePath => new ImageFile {Name = filePath}).ToList();
+               foreach (var s in fileArray)
+               {
+                   var file = new ImageFile();
+                   var fullname = Path.GetFileName(s);
+                   if (fullname != null)
+                   {
+                       var sp = fullname.Split('.');
+                       file.Name = sp[0];
+                   }
+                   file.Url = s;
+                   imageFiles.Add(file);
+               }
+
+               return imageFiles;
+           }
+           catch (DirectoryNotFoundException)
+           {
+               return null;
+           }
        } 
     }
 }

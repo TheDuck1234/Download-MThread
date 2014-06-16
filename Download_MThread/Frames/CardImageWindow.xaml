@@ -7,9 +7,8 @@
         <Button Content="Back" HorizontalAlignment="Left" Margin="10,425,0,0" VerticalAlignment="Top" Width="344" Height="30" FontWeight="Bold" FontSize="14" Click="Button_Click"/>
         <TextBox Name="STextBox" HorizontalAlignment="Left" Height="23" Margin="95,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="259" TextChanged="STextBox_TextChanged"/>
         <ComboBox Name="TypeComboBox" HorizontalAlignment="Left" Margin="48,51,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox Name="SetComboBox" HorizontalAlignment="Left" Margin="225,51,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Type:" HorizontalAlignment="Left" Margin="5,47,0,0" VerticalAlignment="Top"/>
-        <Label Content="Set:" HorizontalAlignment="Left" Margin="191,47,0,0" VerticalAlignment="Top"/>
-        <Button Content="Search" HorizontalAlignment="Left" Margin="5,13,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="SearchButton" Content="Search" HorizontalAlignment="Left" Margin="5,13,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="209,53,0,0" VerticalAlignment="Top" Width="115" Click="RefreshButton_Click"/>
     </Grid>
 </Window>
