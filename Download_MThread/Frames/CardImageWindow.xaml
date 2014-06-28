@@ -1,14 +1,14 @@
 ﻿<Window x:Class="Download_MThread.Frames.CardImageWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         Title="CardImageWindow" Height="496.241" Width="376.752" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+         Title="CardImageWindow" Height="496.241" Width="376.752" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Closed="Window_Closed">
     <Grid>
         <ListBox Name="ListBox" HorizontalAlignment="Left" Height="333" Margin="10,87,0,0" VerticalAlignment="Top" Width="344" MouseDoubleClick="ListBox_MouseDoubleClick"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="10,425,0,0" VerticalAlignment="Top" Width="344" Height="30" FontWeight="Bold" FontSize="14" Click="Button_Click"/>
-        <TextBox Name="STextBox" HorizontalAlignment="Left" Height="23" Margin="95,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="259" TextChanged="STextBox_TextChanged"/>
-        <ComboBox Name="TypeComboBox" HorizontalAlignment="Left" Margin="48,51,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="10,425,0,0" VerticalAlignment="Top" Width="344" Height="30" FontWeight="Bold" FontSize="14" Click="BackButton_Click"/>
+        <TextBox Name="STextBox" HorizontalAlignment="Left" Height="23" Margin="61,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="293" TextChanged="STextBox_TextChanged"/>
+        <ComboBox Name="TypeComboBox" HorizontalAlignment="Left" Margin="61,51,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Type:" HorizontalAlignment="Left" Margin="5,47,0,0" VerticalAlignment="Top"/>
-        <Button Name="SearchButton" Content="Search" HorizontalAlignment="Left" Margin="5,13,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="209,53,0,0" VerticalAlignment="Top" Width="115" Click="RefreshButton_Click"/>
+        <Button Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="220,51,0,0" VerticalAlignment="Top" Width="115" Click="RefreshButton_Click"/>
+        <Label Content="Search:" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

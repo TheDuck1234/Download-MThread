@@ -58,6 +58,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Frames\ImageFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,11 +73,14 @@
     <Compile Include="Core\AppSetting.cs" />
     <Compile Include="Core\Download\ImageFile.cs" />
     <Compile Include="Core\Log\LogManager.cs" />
-    <Compile Include="Core\Download\WizardsImageHandler.cs" />
+    <Compile Include="Core\Download\ImageHandler.cs" />
     <Compile Include="Core\Download\DownloadLoader.cs" />
     <Compile Include="Core\Download\XmlReader.cs" />
     <Compile Include="Frames\CardImageWindow.xaml.cs">
       <DependentUpon>CardImageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Frames\ImageFrame.xaml.cs">
+      <DependentUpon>ImageFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

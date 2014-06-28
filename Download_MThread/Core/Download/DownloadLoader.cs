@@ -78,7 +78,7 @@ namespace Download_MThread.Core.Download
                 var fileName = path + @"\"+ file.Name +".jpg";
                 if (!DownloadLoader.IsCache(fileName))
                 {
-                    WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
+                    ImageHandler.DownloadImageFile(file.Url, fileName);
                     if (!DownloadLoader.IsCache(fileName))
                     {
                         errorList.Add(new Log.Log{Data = file.Name+ " didn't download fully !Error!"});

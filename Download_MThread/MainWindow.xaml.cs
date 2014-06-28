@@ -26,13 +26,13 @@ namespace Download_MThread
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            ToggleButton(false);
             var testlist = XmlReader.GetXmlFiles(AppSettings.GetXmlFileName());
             var lists = DownloadLoader.Partition(testlist, 5);
 
             // Create and collect tasks in list
 
             _starttime = DateTime.Now;
-            ToggleButton(false);
 
             var tasks = lists.Select(list => Task.Factory.StartNew(() =>
             {
@@ -85,7 +85,7 @@ namespace Download_MThread
 
                 LogMaker.MakeListLog(results, path);
 
-                //ToggleButton(true);
+                
             });
             ToggleButton(true);
         }
@@ -114,8 +114,8 @@ namespace Download_MThread
 
         private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
-            var imageWindow = new CardImageWindow();
-
+            var imageWindow = new CardImageWindow(this);
+            this.Hide();
             imageWindow.Show();
         }
     }
