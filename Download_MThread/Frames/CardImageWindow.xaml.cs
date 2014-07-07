@@ -55,6 +55,9 @@ namespace Download_MThread.Frames
         {
             var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
             _imageFiles = ImageHandler.LoadImageFiles(path);
+
+            if (_imageFiles == null) return;
+
             var list = _imageFiles.Select(imageFile => imageFile.Name).ToList();
             ListBox.ItemsSource = list;
         }

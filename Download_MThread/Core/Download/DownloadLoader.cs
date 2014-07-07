@@ -51,7 +51,7 @@ namespace Download_MThread.Core.Download
                 
                 return true;
             }
-            catch (DirectoryNotFoundException)
+            catch (Exception)
             {
                 //throw new Exception("connection error :" + path);
             }

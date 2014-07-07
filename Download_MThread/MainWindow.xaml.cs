@@ -100,10 +100,17 @@ namespace Download_MThread
         private void ToggleButton(bool status)
         {
             TestButton.IsEnabled = status;
-            DcButton.IsEnabled = status;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+
+        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var imageWindow = new CardImageWindow(this);
+            Hide();
+            imageWindow.Show();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
 
@@ -112,11 +119,14 @@ namespace Download_MThread
             MessageBox.Show(delete ? "Caches deleted" : "No caches to deleted");
         }
 
-        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            var imageWindow = new CardImageWindow(this);
-            this.Hide();
-            imageWindow.Show();
+            throw new NotImplementedException();
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

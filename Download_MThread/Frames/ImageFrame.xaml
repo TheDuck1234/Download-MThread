@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ImageFrame" Height="329.797" Width="223.955" ResizeMode="NoResize" >
     <Grid>
-        <Image Name="Image" HorizontalAlignment="Left" Height="265" Margin="10,20,0,0" VerticalAlignment="Top" Width="202"/>
+        <Image Name="FileImage" HorizontalAlignment="Left" Height="265" Margin="10,20,0,0" VerticalAlignment="Top" Width="202"/>
     </Grid>
 </Window>
