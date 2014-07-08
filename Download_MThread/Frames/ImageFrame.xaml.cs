@@ -9,16 +9,31 @@ namespace Download_MThread.Frames
     /// </summary>
     public partial class ImageFrame : Window
     {
+        private Boolean _close = false;
+
         public ImageFrame(String imageName)
         {
             InitializeComponent();
             LoadImage(imageName);
         }
-        private void LoadImage(string imageName)
+        public void LoadImage(string imageName)
         {
             Title = imageName;
             var bitmap = ImageHandler.LoadImage(imageName);
             FileImage.Source = bitmap;
+        }
+
+        public void CloseImage()
+        {
+            _close = true;
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (_close) return;
+            e.Cancel = true;
+            Hide();
         }
     }
 }

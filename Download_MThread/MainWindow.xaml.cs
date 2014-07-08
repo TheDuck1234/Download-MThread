@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using Download_MThread.Core;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace Download_MThread
     {
         private int _count;
         private DateTime _starttime;
-
+        private DispatcherTimer _timer;
+        private ImageFrame imageFrame;
 
         public MainWindow()
         {
             InitializeComponent();
+            SetupListBox();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -29,7 +32,7 @@ namespace Download_MThread
             ToggleButton(false);
             var testlist = XmlReader.GetXmlFiles(AppSettings.GetXmlFileName());
             var lists = DownloadLoader.Partition(testlist, 5);
-
+            SetupTimer();
             // Create and collect tasks in list
 
             _starttime = DateTime.Now;
@@ -83,10 +86,13 @@ namespace Download_MThread
                 }
                 var path = Directory.GetCurrentDirectory() + AppSettings.GetLogPath();
 
+                _timer.Stop();
+
                 LogMaker.MakeListLog(results, path);
 
                 
             });
+            SetupListBox();
             ToggleButton(true);
         }
         private TimeSpan EstimateTime(int max)
@@ -105,28 +111,87 @@ namespace Download_MThread
 
         private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
-            var imageWindow = new CardImageWindow(this);
-            Hide();
-            imageWindow.Show();
+            var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            Process.Start(path);
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void Delete_Click(object sender, RoutedEventArgs e)
         {
             var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
-
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
             var delete = DownloadLoader.DeleteAllCache(path);
 
             MessageBox.Show(delete ? "Caches deleted" : "No caches to deleted");
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void Log_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void Image_Click(object sender, RoutedEventArgs e)
+        {
+
+            var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            Process.Start(path);
+        }
+        private void Close_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        private void SetupTimer()
         {
-            throw new NotImplementedException();
+            _timer = new DispatcherTimer();
+            _timer.Tick += timer_Tick;
+            _timer.Interval = new TimeSpan(0, 0, 3);
+            _timer.Start();
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            SetupListBox();
+        }
+
+        private void SetupListBox()
+        {
+            var path = Directory.GetCurrentDirectory() + AppSettings.GetImagePath();
+            var imageFiles = ImageHandler.LoadImageFiles(path);
+
+            if (imageFiles == null) return;
+
+            var list = imageFiles.Select(imageFile => imageFile.Name).ToList();
+            ListBox.ItemsSource = list;
+        }
+
+        private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (imageFrame == null)
+            {
+                imageFrame = new ImageFrame(ListBox.SelectedItem.ToString());
+                imageFrame.Show();
+            }
+            else
+            {
+                imageFrame.LoadImage(ListBox.SelectedItem.ToString());
+                imageFrame.Show();
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (imageFrame == null) return;
+            imageFrame.CloseImage();
         }
     }
 }

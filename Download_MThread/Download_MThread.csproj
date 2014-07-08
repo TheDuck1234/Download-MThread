@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Frames\CardImageWindow.xaml">
+    <Page Include="Frames\CardImageWindow_beta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -77,8 +77,8 @@
     <Compile Include="Core\Download\ImageHandler.cs" />
     <Compile Include="Core\Download\DownloadLoader.cs" />
     <Compile Include="Core\Download\XmlReader.cs" />
-    <Compile Include="Frames\CardImageWindow.xaml.cs">
-      <DependentUpon>CardImageWindow.xaml</DependentUpon>
+    <Compile Include="Frames\CardImageWindow_beta.xaml.cs">
+      <DependentUpon>CardImageWindow_beta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Frames\ImageFrame.xaml.cs">
       <DependentUpon>ImageFrame.xaml</DependentUpon>
