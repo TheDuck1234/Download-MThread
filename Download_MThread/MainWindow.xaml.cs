@@ -19,7 +19,13 @@ namespace Download_MThread
         private int _count;
         private DateTime _starttime;
         private DispatcherTimer _timer;
-        private ImageFrame imageFrame;
+        private ImageFrame _imageFrame;
+
+        // does not work yet
+        private bool _running = false;
+        private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
+        //
+
 
         public MainWindow()
         {
@@ -29,6 +35,16 @@ namespace Download_MThread
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            //var token = tokenSource.Token;
+            //if (_running)
+            //{
+            //    _tokenSource.Cancel();
+            //    _running = false;
+            //    return;
+            //}
+            //running = true;
+
             ToggleButton(false);
             var testlist = XmlReader.GetXmlFiles(AppSettings.GetXmlFileName());
             var lists = DownloadLoader.Partition(testlist, 5);
@@ -72,7 +88,7 @@ namespace Download_MThread
                 return result;
 
 
-            })).ToList();
+            }, _tokenSource.Token)).ToList();
             
             Task.Factory.StartNew(() =>
             {
@@ -91,9 +107,8 @@ namespace Download_MThread
                 LogMaker.MakeListLog(results, path);
 
                 
-            });
+            }, _tokenSource.Token);
             SetupListBox();
-            ToggleButton(true);
         }
         private TimeSpan EstimateTime(int max)
         {
@@ -127,13 +142,22 @@ namespace Download_MThread
                 Directory.CreateDirectory(path);
             }
             var delete = DownloadLoader.DeleteAllCache(path);
-
+            ProgressLabel.Content = "";
+            EstimateTimeLabel.Content = "";
+            ProgressBar.Value = 0;
+            SetupListBox();
+            ToggleButton(true);
             MessageBox.Show(delete ? "Caches deleted" : "No caches to deleted");
         }
 
         private void Log_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var path = Directory.GetCurrentDirectory() + AppSettings.GetLogPath();
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            Process.Start(path);
         }
         private void Image_Click(object sender, RoutedEventArgs e)
         {
@@ -147,14 +171,14 @@ namespace Download_MThread
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Close();
         }
 
         private void SetupTimer()
         {
             _timer = new DispatcherTimer();
             _timer.Tick += timer_Tick;
-            _timer.Interval = new TimeSpan(0, 0, 3);
+            _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Start();
         }
 
@@ -176,22 +200,22 @@ namespace Download_MThread
 
         private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (imageFrame == null)
+            if (_imageFrame == null)
             {
-                imageFrame = new ImageFrame(ListBox.SelectedItem.ToString());
-                imageFrame.Show();
+                _imageFrame = new ImageFrame(ListBox.SelectedItem.ToString());
+                _imageFrame.Show();
             }
             else
             {
-                imageFrame.LoadImage(ListBox.SelectedItem.ToString());
-                imageFrame.Show();
+                _imageFrame.LoadImage(ListBox.SelectedItem.ToString());
+                _imageFrame.Show();
             }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (imageFrame == null) return;
-            imageFrame.CloseImage();
+            if (_imageFrame == null) return;
+            _imageFrame.CloseImage();
         }
     }
 }
