@@ -38,24 +38,14 @@ namespace Download_MThread.Core.Download
             return File.Exists(fileName);
         }
 
-        public static bool DeleteAllCache(string path)
+        public static void DeleteAllCache(string path)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(path))
-                {
-                    return false;
-                }
+            var files = Directory.GetFiles(path);
 
-                Directory.Delete(path, true);
-                
-                return true;
-            }
-            catch (Exception)
+            foreach (var filename in files)
             {
-                //throw new Exception("connection error :" + path);
+                File.Delete(filename);
             }
-            return false;
         }
     }
     public class DownloadWorker
@@ -78,7 +68,7 @@ namespace Download_MThread.Core.Download
                 var fileName = path + @"\"+ file.Name +".jpg";
                 if (!DownloadLoader.IsCache(fileName))
                 {
-                    ImageHandler.DownloadImageFile(file.Url, fileName);
+                    WizardsImageHandler.DownloadRemoteImageFile(file.Url, fileName);
                     if (!DownloadLoader.IsCache(fileName))
                     {
                         errorList.Add(new Log.Log{Data = file.Name+ " didn't download fully !Error!"});
